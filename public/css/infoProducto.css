@@ -1,0 +1,32 @@
+.infoproducto figure.visor img {
+    display: none;
+    cursor: zoom-in;
+}
+
+.infoproducto a {
+    display: none;
+    cursor: zoom-in;
+}
+
+.infoproducto a:first-child {
+    display: block;
+}
+
+.infoproducto figure.visor img:first-child {
+    display: block;
+}
+
+.lupa {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.lupa img {
+    position: relative;
+    margin-top: -100%;
+    margin-left: -50%;
+    width: 150%;
+}

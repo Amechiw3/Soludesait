@@ -1,0 +1,63 @@
+{% extends 'partials/layout.twig' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ 'css/flexslider.css'|public }}">
+    <link rel="stylesheet" href="{{ 'css/infoProducto.css'|public }}">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid infoproducto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 visorImg">
+                    <figure class="visor">
+                        <a href="{{ 'media/img-01.jpg'|public }}" data-toggle="lightbox" data-gallery="example-gallery">
+                            <img src="{{ 'media/img-01.jpg'|public }}" class="img-fluid">
+                        </a>
+                        <a href="{{ 'media/img-02.jpg'|public }}" data-toggle="lightbox" data-gallery="example-gallery">
+                            <img src="{{ 'media/img-02.jpg'|public }}" class="img-fluid">
+                        </a>
+                        <a href="{{ 'media/img-03.jpg'|public }}" data-toggle="lightbox" data-gallery="example-gallery">
+                            <img src="{{ 'media/img-03.jpg'|public }}" class="img-fluid">
+                        </a>
+                        <a href="{{ 'media/img-04.jpg'|public }}" data-toggle="lightbox" data-gallery="example-gallery">
+                            <img src="{{ 'media/img-04.jpg'|public }}" class="img-fluid">
+                        </a>
+                        <a href="{{ 'media/img-05.jpg'|public }}" data-toggle="lightbox" data-gallery="example-gallery">
+                            <img src="{{ 'media/img-05.jpg'|public }}" class="img-fluid">
+                        </a>
+                    </figure>
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <img data-target="1" class="img-thumbnail" src="{{ 'media/img-01.jpg'|public }}" />
+                            </li>
+                            <li>
+                                <img data-target="2" class="img-thumbnail" src="{{ 'media/img-02.jpg'|public }}" />
+                            </li>
+                            <li>
+                                <img data-target="3" class="img-thumbnail" src="{{ 'media/img-03.jpg'|public }}" />
+                            </li>
+                            <li>
+                                <img data-target="4" class="img-thumbnail" src="{{ 'media/img-04.jpg'|public }}" />
+                            </li>
+                            <li>
+                                <img data-target="5" class="img-thumbnail" src="{{ 'media/img-05.jpg'|public }}" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="lupa">
+                        <img src="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ 'js/jquery.flexslider.js'|public }}"></script>
+    <script src="{{ 'js/infoProducto.js'|public }}"></script>
+{% endblock %}

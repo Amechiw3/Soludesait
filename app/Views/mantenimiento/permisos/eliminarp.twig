@@ -1,0 +1,60 @@
+{% extends 'partials/layout.twig' %}
+
+{% block content %}
+    <div class="pb-2 mt-4 mb-2 border-bottom">
+        <h4>
+            <!--{% if datos.id %}
+                {{ datos.nombre }}
+            {% endif %}-->
+        </h4>
+    </div>
+    <div class="row my-4">
+        <div class="col-12 d-none">
+            <div class="form-group">
+                <input type="text" class="form-control" disabled readonly placeholder="id" id="id" name="id" value="{{ datos.id }}">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="d-none d-md-block" for="nombre">Nombre</label>
+                <input type="text" class="form-control" disabled readonly placeholder="Nombre" id="nombre" name="nombre" value="{{ datos.nombre }}">
+            </div>
+        </div>
+        <div class="col">
+            <div class="float-right">
+                <a href="{{ 'mantenimiento/'|url }}" class="btn btn-secondary">Cancelar</a>
+                <button class="btn btn-danger ml-2" type="button" data-toggle="modal" data-target="#modalEliminar{{ datos.id }}">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    <div role="dialog" tabindex="-1" class="modal modal-dark fade" id="modalEliminar{{ datos.id }}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!--<div class="modal-header">
+                    <h4 class="modal-title text-center">¿Esta seguro que quiere eliminar el Registro?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>-->
+                <div class="modal-body">
+                    <form action="{{ 'mantenimiento/eliminarp'|url }}" method="POST" class="">
+                        <h4 class="modal-title text-center">¿Esta seguro que quiere eliminar el Registro?</h4>
+                        <div class="form-group d-none">
+                            <label class="d-none d-md-block" for="rol">ID</label>
+                            <input type="text" class="form-control" id="id" name="id" value="{{ datos.id }}">
+                        </div>
+                        <div class="row my-3">
+                            <div class="col">
+                                <div class="d-flex flex-row justify-content-center">
+                                    <button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button>
+                                    <button class="btn btn-outline-danger ml-2" data-ajax="true" type="submit">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'partials/layout.twig' %}
+
+{% block content %}
+    <div class="team-clean">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">Quienes Somos</h2>
+                <p class="text-center">Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae.</p>
+            </div>
+            <div class="row people">
+                <div class="col-md-6 col-lg-4 offset-md-3 offset-lg-4 item">
+                    <img class="rounded-circle" src="{{ 'img/martinfierro.jpg'|public }}" />
+                    <h3 class="name">Martin Fierro Robles</h3>
+                    <p class="title">Full Stack Developer</p>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequatur delectus dicta dolorem eveniet excepturi fugit in ipsa mollitia nam natus obcaecati omnis pariatur quasi quibusdam recusandae, ullam voluptatem voluptates.</p>
+                    <div class="social">
+                        <a href="#">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

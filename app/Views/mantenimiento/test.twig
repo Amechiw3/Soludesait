@@ -1,0 +1,48 @@
+{% extends 'partials/layout.twig' %}
+
+{% block content %}
+    <div class="pb-2 mt-4 mb-2">
+        <form class="mt-3" action="{{ 'mantenimiento/test2'|url }}" method="POST">
+            <div class="row">
+                <div class="col">
+                    <div class="alert-container"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md col-sm-12">
+                    <div class="form-group">
+                        <label class="d-none d-md-block" for="nombre">Nombre</label>
+                        <input type="text" class="form-control" placeholder="Nombre" id="nombre" name="nombre">
+                        <span for="" data-key="nombre" class="form-validation-failed msgError"></span>
+                    </div>
+                </div>
+                <div class="col-md col-sm-6">
+                    <div class="form-group">
+                        <label class="d-none d-md-block" for="apaterno">Apellido Paterno</label>
+                        <input type="text" class="form-control" placeholder="Apellido Paterno" id="apaterno" name="apaterno">
+                        <span for="" data-key="apaterno" class="form-validation-failed msgError"></span>
+                    </div>
+                </div>
+                <div class="col-md col-sm-6">
+                    <div class="form-group">
+                        <label class="d-none d-md-block" for="amaterno">Apellido Materno</label>
+                        <input type="text" class="form-control" placeholder="Apellido Materno" id="amaterno" name="amaterno">
+                        <span for="" data-key="amaterno" class="form-validation-failed msgError"></span>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit" data-confirm="Seguro" data-ajax="true">
+                Guardar <i class="fa fa-gear"></i>
+            </button>
+        </form>
+    </div>
+    <div class="pb-2 mt-4 mb-2 border-bottom">
+        <h4>
+            Catálogo de Usuarios
+            <a href="{{ 'mantenimiento/nusuario'|url }}" class="btn btn-success float-right">
+                <i class="fa fa-plus"></i>
+            </a>
+        </h4>
+    </div>
+    <div id="grid"></div>
+{% endblock %}

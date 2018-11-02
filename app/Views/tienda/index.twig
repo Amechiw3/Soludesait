@@ -1,0 +1,60 @@
+{% extends 'partials/layout.twig' %}
+{% block content %}
+    <div class="row">
+        <a href="{{ 'tienda/vercarrito'|url }}"
+         class="btn btn-success">
+            Ver Carrito</a>
+    </div>
+    <div class="product-clean">
+        <div class="row product">
+            {% for item in datos %}
+                <div class="col-md-4 col-lg-4">
+                    <div class="item">
+                        <a href="{{ ('media/usuarios/'~item.avatar)|public }}" data-toggle="lightbox">
+                            <img src="{{ ('media/usuarios/'~item.avatar)|public }}" class="img-fluid">
+                        </a>
+                        <h3 class="name">{{ item.nombre }}</h3>
+                        <p class="title">Categoria</p>
+                        <p class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda consequatur delectus dicta dolorem eveniet excepturi fugit in ipsa mollitia nam natus obcaecati omnis pariatur quasi quibusdam recusandae, ullam voluptatem voluptates.
+                        </p>
+                        <div class="options">
+                            <a href="" class="btn btn-success AddCar" data-target="{{ item.id }}">
+                                <i class="fa fa-cart-plus"></i>
+                                Agregar al carrito
+                            </a>
+                            <a href="" class="btn btn-info">
+                                <i class="fa fa-info"></i>
+                                Info
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $('body').on('click','.AddCar',function(){
+            var codigo=$(this).data('target');
+            $.ajax({
+                url:'{{ 'tienda/addcar'|url }}',
+                dataType:'JSON',
+                data:{id:codigo},
+                type:'POST',
+                preventDefault:function(){},
+                success:function(r){
+                    if(r.response){
+                        alert('Se agrego---');
+                        //FUNCION PARA ACTUALIZAR EL CARRITO
+                    }
+                },
+                error:function(request, status, error){
+                    console.log(error);
+                }
+            });
+
+        });
+    </script>
+{% endblock %}

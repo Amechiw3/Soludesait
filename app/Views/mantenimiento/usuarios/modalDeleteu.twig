@@ -1,0 +1,52 @@
+<div role="dialog" tabindex="-1" class="modal modal-dark fade" id="modalDeleteu{{ usuario.id }}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title ">¿Esta seguro que quiere eliminar el Registro?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ 'mantenimiento/eliminaru'|url }}" method="POST" class="mt-2">
+                    <div class="form-group row d-none">
+                        <label for="" class="col-md-4 col-form-label">id</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="id"name="id" placeholder="Email" value="{{ usuario.id }}">
+                            <!--<label for="">{{ usuario.id }}</label>-->
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3">
+                        <label for="" class="col-md-4 col-form-label">Nombre</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" disabled readonly value="{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}">
+                            <!--<label for="">{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</label>-->
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3">
+                        <label for="" class="col-md-4 col-form-label">Correo Electronico</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" disabled readonly value="{{ usuario.correo }}">
+                            <!--<label for="">{{ usuario.correo }}</label>-->
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3">
+                        <label for="" class="col-md-4 col-form-label">Rol</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" disabled readonly value="{{ usuario.rol.nombre }}">
+                            <!--<label for="">{{ usuario.rol.nombre }}</label>-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mt-3">
+                            <div class="float-right">
+                                <button class="btn btn-light" type="button" data-dismiss="modal">Cerrar</button>
+                                <button class="btn btn-outline-danger ml-2" type="submit">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

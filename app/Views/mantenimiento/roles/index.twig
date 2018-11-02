@@ -1,0 +1,50 @@
+{% extends 'partials/layout.twig' %}
+
+{% block content %}
+    <div class="pb-2 mt-4 mb-2 border-bottom">
+        <h4>
+            Catálogo de Roles
+            <a href="{{ 'mantenimiento/nrol '|url }}" class="btn btn-success float-right">
+                <i class="fa fa-plus"></i>
+            </a>
+        </h4>
+    </div>
+    {% if (datos.count > 0) %}
+        <div class="table-responsive mb-4">
+            <table class="table table-sm table-borderless table-hover">
+                <thead class="thead-dark">
+                    <tr class="text-center">
+                        <th>NOMBRE</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for item in datos %}
+                        <tr>
+                            <td>{{ item.nombre }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ ('mantenimiento/actualizarr/' ~ item.id)|url }}" class="btn btn-link text-info">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </a>
+                                    <a href="{{ ('mantenimiento/eliminarr/' ~ item.id)|url }}" class="btn btn-link text-danger">
+                                        <i class="fa fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+            <caption>Listado de Permisos: {{ datos.count }}</caption>
+        </div>
+    {% else %}
+        <div class="alert alert-dismissible alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4 class="alert-heading">Aviso!</h4>
+            <p class="mb-0">No se encontraron registros</p>
+        </div>
+    {% endif %}
+
+{% endblock %}
