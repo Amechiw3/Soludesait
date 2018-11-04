@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{{ 'bower_components/bootstrap/dist/css/bootstrap.min.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/ekko-lightbox/dist/ekko-lightbox.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/sweetalert2/dist/sweetalert2.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/animate.css/animate.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/swiper/dist/css/swiper.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'css/style.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'css/diseno.css'|public }}?{{ 'now'|date('U') }}" rel="stylesheet" />
+    <link href="{{ 'css/developer.css'|public }}" rel="stylesheet" />
+    <title>{{ title }}</title>
+    {% block styles %}{% endblock %}
+
+</head>
+<body>
+    {% set usuario = user() %}
+    <div class="header-dark">
+        <nav class="navbar navbar-dark navbar-expand-lg">
+            <div class="container">
+                <a href="#" class="navbar-brand">
+                    {{ title }}
+                    <i class="fa fa-code"></i>
+                </a>
+                <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav">
+                        <li role="presentation" class="nav-item">
+                            <a href="{{ 'home'|url }}" class="nav-link">Inicio</a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a href="{{ 'home/empresa'|url }}" class="nav-link">Quienes Somos</a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a href="#contacto" class="nav-link">Contacto</a>
+                        </li>
+                        <li role="presentation" class="nav-item">
+                            <a href="{{ 'home/productos'|url }}" class="nav-link">Productos</a>
+                        </li>
+                        <li class="dropdown"><a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle">Mantenimiento</a>
+                            <div role="menu" class="dropdown-menu">
+                                <a role="presentation" href="{{ 'mantenimiento/usuarios'|url }}" class="dropdown-item">Usuarios</a>
+                                <a role="presentation" href="{{ 'mantenimiento/roles'|url }}" class="dropdown-item">Roles</a>
+                                <a role="presentation" href="{{ 'mantenimiento/permisos'|url }}" class="dropdown-item">Permisos</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav ml-auto profile-nav">
+                        {% if usuario %}
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle">
+                                    Hola, ¡<b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>!
+                                </a>
+                                <div role="menu" class="dropdown-menu dropdown-menu-right container-fluid">
+                                    <div class="dropdown-header text-center">
+                                        <img src="{{ ('media/usuarios/'~usuario.avatar)|public }}" alt="" class="img-fluid d-none d-md-block">
+                                        <p>
+                                            <b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>
+                                            <br class="text-muted">{{ usuario.correo }}</p>
+                                        </p>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 no-gutters">
+                                            <a href="" class="dropdown-item text-center">Perfil</a>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 no-gutters">
+                                            <a href="" class="dropdown-item text-center">Cerrar Sesion</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li role="presentation" class="nav-item navbar-text" title="Desconectarse">
+                                <a href="{{ 'auth/signout'|url }}">
+                                    <i class="fa fa-sign-out-alt"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            {% include 'partials/modalLogin.twig' %}
+
+                            <li role="presentation" class="nav-item nav-link" data-toggle="modal" data-target="#modalLogin">
+                                Iniciar Sesion
+                            </li>
+                            <li role="presentation" class="nav-item btn btn-outline-primary">
+                                Registrarse
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="carousel" id="carousel-1">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img src="{{ 'media/fondos/1.jpg'|public }}" alt="Slide Image" class="w-100" />
+                    <div class="carousel-caption">
+                        <h1>{{ title }}</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ 'media/fondos/2.jpg'|public }}" alt="Slide Image" class="w-100" />
+                    <div class="carousel-caption">
+                        <h1>{{ title }}</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                </div>
+                <div class="carousel-item active">
+                    <img src="{{ 'media/fondos/3.jpg'|public }}" alt="Slide Image" class="w-100" />
+                    <div class="carousel-caption">
+                        <h1>{{ title }}</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ 'media/fondos/4.jpg'|public }}" alt="Slide Image" class="w-100" />
+                    <div class="carousel-caption">
+                        <h1>{{ title }}</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ 'media/fondos/5.jpg'|public }}" alt="Slide Image" class="w-100" />
+                    <div class="carousel-caption">
+                        <h1>{{ title }}</h1>
+                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="#carousel-1" role="button" data-slide="prev" class="carousel-control-prev">
+                    <span aria-hidden="true" class="carousel-control-prev-icon"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a href="#carousel-1" role="button" data-slide="next" class="carousel-control-next">
+                    <span aria-hidden="true" class="carousel-control-next-icon"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-1" data-slide-to="0"></li>
+                <li data-target="#carousel-1" data-slide-to="1"></li>
+                <li data-target="#carousel-1" data-slide-to="2" class="active"></li>
+                <li data-target="#carousel-1" data-slide-to="3"></li>
+                <li data-target="#carousel-1" data-slide-to="4"></li>
+            </ol>
+        </div>
+    </div>
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+    <div class="footer-clean">
+        <footer>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 item social">
+                        <a href="#">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <p class="copyright">
+                            <a href="{{ 'help'|url }}" target="blank">Derechos Reservados</a> © {{ "now"|date("Y") }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="{{ 'bower_components/jquery/dist/jquery.min.js'|public }}"></script>
+    <script src="{{ 'bower_components/bootstrap/dist/js/bootstrap.js'|public }}"></script>
+    <script src="{{ 'bower_components/swiper/dist/js/swiper.js'|public }}"></script>
+    <script src="{{ 'bower_components/ekko-lightbox/dist/ekko-lightbox.min.js'|public }}"></script>
+    <script src="{{ 'bower_components/sweetalert2/dist/sweetalert2.all.js'|public }}"></script>
+    <script src="{{ 'bower_components/jquery-form/dist/jquery.form.min.js'|public }}"></script>
+    <script src="{{ 'js/main.js'|public }}"></script>
+    <script src="{{ 'js/ini.js'|public }}"></script>
+    <script src="{{ 'js/anexgrid/jquery.anexgrid.js'|public }}"></script>
+    <script>
+        function redirect(url) {
+            url = url || '';
+            window.location.href = base_url(url);
+        }
+        function base_url(url) {
+            url = url || '';
+            return '{{''|url}}' + url;
+        }
+    </script>
+    {% block script %}{% endblock %}
+</body>
+</html>

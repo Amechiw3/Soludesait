@@ -1,0 +1,103 @@
+{% extends 'partials/layout.twig' %}
+
+{% block content %}
+    <div class="container mt-4 profile-page">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="{{ ('media/usuarios/'~datos.avatar)|public }}" class="profile-picture" />
+            </div>
+            <div class="col-md-9">
+                <div class="profile-head">
+                    <h4>{{ datos.nombre ~ ' ' ~ datos.apaterno ~ ' ' ~ datos.amaterno }}</h4>
+                    <h5>{{ datos.rol.nombre }}</h5>
+                    <h6>{{ datos.correo }}</h6>
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a data-toggle="tab" href="#tab-1" class="nav-link active">Compras</a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tab" href="#tab-2" class="nav-link">Mis Direcciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-toggle="tab" href="#tab-3" class="nav-link">Opciones</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9 offset-md-3">
+                <div class="tab-content profile-tab">
+                    <div class="tab-pane active" id="tab-1">
+                        <div class="">
+                            <h4>Catalogo de mis Compras</h4>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-2">
+                        <div class="">
+                            <h4>Catalogo de mis Direcciones</h4>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-3">
+                        <form class="form row" action="">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="first_name"><h4>Nombre</h4></label>
+                                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any.">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="last_name"><h4>Apellido Paterno</h4></label>
+                                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any.">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="phone"><h4>Apellido Materno</h4></label>
+                                    <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any.">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="email"><h4>Correo Electronico</h4></label>
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="passwordac"><h4>Contraseña Actual</h4></label>
+                                    <input type="password" class="form-control" name="passwordac" id="passwordac" placeholder="password" title="enter your password.">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password"><h4>Contraseña</h4></label>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="password2"><h4>Confirmar Contraseña</h4></label>
+                                    <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button class="btn btn-lg btn-success" type="submit">
+                                        <i class="fa fa-save"></i> Guardar
+                                    </button>
+                                    <button class="btn btn-lg" type="reset">
+                                        <i class="fa fa-repeat"></i> Reiniciar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

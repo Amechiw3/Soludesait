@@ -93,4 +93,19 @@ class PermisosRepository
         return $rh;
     }
 
+    #region PERMISOS NEGADOS
+    public function obtenerPermisoNegadoByRol($permisoId,$rolId):?PermisoNegado{
+        $pNegado=null;
+        try{
+            $pNegado=$this->permisoNegado
+                ->where('permiso_id',$permisoId)
+                ->where('rol_id',$rolId)
+                ->first();
+        }catch (\Exception $e){
+            Log::error(UsuarioRepositories::class,
+                $e->getMessage());
+        }
+        return $pNegado;
+    }
+    #endregion
 }

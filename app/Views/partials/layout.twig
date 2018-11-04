@@ -11,6 +11,7 @@
     <link href="{{ 'bower_components/ekko-lightbox/dist/ekko-lightbox.css'|public }}" rel="stylesheet" />
     <link href="{{ 'bower_components/sweetalert2/dist/sweetalert2.css'|public }}" rel="stylesheet" />
     <link href="{{ 'bower_components/animate.css/animate.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/swiper/dist/css/swiper.css'|public }}" rel="stylesheet" />
     <link href="{{ 'css/style.css'|public }}" rel="stylesheet" />
     <link href="{{ 'css/diseno.css'|public }}?{{ 'now'|date('U') }}" rel="stylesheet" />
     <link href="{{ 'css/developer.css'|public }}" rel="stylesheet" />
@@ -20,11 +21,12 @@
 </head>
 <body>
     {% set usuario = user() %}
-    <div class="header-dark">
-        <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+    <div class="header-blue">
+        <nav class="navbar navbar-dark navbar-expand-lg navigation-clean-search">
             <div class="container">
                 <a href="#" class="navbar-brand">
-                    <i class="fa fa-code fa-2x"></i>
+                    {{ title }}
+                    <i class="fa fa-code"></i>
                 </a>
                 <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
                     <span class="sr-only">Toggle navigation</span>
@@ -39,7 +41,7 @@
                             <a href="{{ 'home/empresa'|url }}" class="nav-link">Quienes Somos</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a href="{{ 'home/contacto'|url }}" class="nav-link">Contacto</a>
+                            <a href="#contacto" class="nav-link">Contacto</a>
                         </li>
                         <li role="presentation" class="nav-item">
                             <a href="{{ 'home/productos'|url }}" class="nav-link">Productos</a>
@@ -52,71 +54,49 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav ml-auto">
-                        {% if usuario %}
-                            <li role="presentation" class="nav-item nav-link">
+                    <ul class="nav navbar-nav ml-auto profile-nav">
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle">
                                 Hola, ¡<b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>!
-                            </li>
-                            <li role="presentation" class="nav-item navbar-text" title="Desconectarse">
-                                <a href="{{ 'auth/signout'|url }}">
-                                    <i class="fa fa-sign-out-alt"></i>
-                                </a>
-                            </li>
-                        {% else %}
-                            {% include 'partials/modalLogin.twig' %}
-
-                            <li role="presentation" class="nav-item nav-link" data-toggle="modal" data-target="#modalLogin">
-                                Iniciar Sesion
-                            </li>
-                            <li role="presentation" class="nav-item btn btn-outline-primary">
-                                Registrarse
-                            </li>
-                        {% endif %}
+                            </a>
+                            <div role="menu" class="dropdown-menu dropdown-menu-right container-fluid">
+                                <div class="dropdown-header text-center">
+                                    <img src="{{ ('media/usuarios/'~usuario.avatar)|public }}" alt="" class="img-fluid d-none d-md-block">
+                                    <p>
+                                        <b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>
+                                        <br class="text-muted">{{ usuario.correo }}</p>
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 no-gutters">
+                                        <a href="" class="dropdown-item text-center">Perfil</a>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 no-gutters">
+                                        <a href="" class="dropdown-item text-center">Cerrar Sesion</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li role="presentation" class="nav-item navbar-text" title="Desconectarse">
+                            <a href="{{ 'auth/signout'|url }}">
+                                <i class="fa fa-sign-out-alt"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
-        <!--<div class="container hero">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <h1 class="text-center">The Revolution is Here</h1>
-                </div>
-            </div>
-        </div>-->
     </div>
-    <main role="main" class="container">
+
+
+    <main role="main">
         {% block content %}{% endblock %}
     </main>
     <div class="footer-clean">
         <footer>
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Servicios</h3>
-                        <ul>
-                            <li><a href="#">Diseño Web</a></li>
-                            <li><a href="#">Desarrollo</a></li>
-                            <li><a href="#">Hosting</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Quienes Somos</h3>
-                        <ul>
-                            <li><a href="#">Empresa</a></li>
-                            <li><a href="#">Equipo</a></li>
-                            <li><a href="#">Historia</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Productos</h3>
-                        <ul>
-                            <li><a href="#">Sistemas Web</a></li>
-                            <li><a href="#">Desarrollo Movil</a></li>
-                            <li><a href="#">Escritorio</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 item social">
+                    <div class="col-12 item social">
                         <a href="#">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
@@ -130,7 +110,7 @@
                             <i class="fab fa-twitter"></i>
                         </a>
                         <p class="copyright">
-                            <a href="{{ 'help'|url }}" target="blank">Martin Fierro Robles</a> © {{ "now"|date("Y") }}
+                            <a href="{{ 'help'|url }}" target="blank">Derechos Reservados</a> © {{ "now"|date("Y") }}
                         </p>
                     </div>
                 </div>
@@ -139,6 +119,7 @@
     </div>
     <script src="{{ 'bower_components/jquery/dist/jquery.min.js'|public }}"></script>
     <script src="{{ 'bower_components/bootstrap/dist/js/bootstrap.js'|public }}"></script>
+    <script src="{{ 'bower_components/swiper/dist/js/swiper.js'|public }}"></script>
     <script src="{{ 'bower_components/ekko-lightbox/dist/ekko-lightbox.min.js'|public }}"></script>
     <script src="{{ 'bower_components/sweetalert2/dist/sweetalert2.all.js'|public }}"></script>
     <script src="{{ 'bower_components/jquery-form/dist/jquery.form.min.js'|public }}"></script>
@@ -156,6 +137,5 @@
         }
     </script>
     {% block script %}{% endblock %}
-
 </body>
 </html>

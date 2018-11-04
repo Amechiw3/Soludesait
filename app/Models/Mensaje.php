@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Martin Fierro
- * Date: 31/10/2018
- * Time: 06:47 PM
+ * Date: 03/11/2018
+ * Time: 04:06 PM
  */
 
 namespace App\Models;
@@ -12,8 +12,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cupon extends Model {
+class Mensaje extends Model {
     use SoftDeletes;
-    protected $table = 'cupones';
+
+    protected $table = 'mensajes';
 
 }

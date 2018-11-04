@@ -10,7 +10,10 @@
 $router->group(
     ['before' => 'auth'], function($router) {
         $router->controller('/mantenimiento', 'App\\Controller\\MantenimientoController');
-    }
+
+        $router->controller('/perfil', 'App\\Controller\\PerfilController');
+
+}
 );
 $router->controller('/home', 'App\\Controller\\HomeController');
 $router->controller('/auth', 'App\\Controller\\AuthController');

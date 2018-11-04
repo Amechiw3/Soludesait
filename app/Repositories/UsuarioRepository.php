@@ -178,12 +178,14 @@ class UsuarioRepository
             if (is_object($tmp)) {
 
                 Auth::signIn([
-                   'id'         => $tmp->id,
+                    'id'         => $tmp->id,
                     'nombre'    => $tmp->nombre,
                     'apaterno'  => $tmp->apaterno,
                     'amaterno'  => $tmp->amaterno,
                     'rol_id'    => $tmp->rol_id,
-                    'avatar'    => $tmp->avatar
+                    'rol'       => $tmp->roles,
+                    'avatar'    => $tmp->avatar,
+                    'correo'    => $tmp->correo
                 ]);
                 $rh->setResponse(true);
             } else {
