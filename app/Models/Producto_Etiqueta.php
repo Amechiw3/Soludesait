@@ -20,7 +20,7 @@ class Producto_Etiqueta extends Model {
         return $this->belongsTo('App\Models\Producto');
     }
 
-    public function usuarios() {
-        return $this->belongsTo('App\Models\Etiquetas');
+    public function etiqueta() {
+        return $this->belongsTo('App\Models\Etiqueta');
     }
 }

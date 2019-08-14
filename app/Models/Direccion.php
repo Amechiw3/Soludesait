@@ -22,18 +22,18 @@ class Direccion extends Model {
     }
 
     public function usuario() {
-        return $this->hasOne('App\Models\Usuario');
+        return $this->belongsTo('App\Models\Usuario');
     }
 
     public function ciudad() {
-        return $this->hasOne('App\Models\Ciudad');
+        return $this->belongsTo('App\Models\Ciudad');
     }
 
     public function estado() {
-        return $this->hasOne('App\Models\Estado');
+        return $this->belongsTo('App\Models\Estado');
     }
 
     public function pais() {
-        return $this->hasOne('App\Models\Pais');
+        return $this->belongsTo('App\Models\Pais');
     }
 }

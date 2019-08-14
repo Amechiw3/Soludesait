@@ -10,10 +10,11 @@ $('.flexslider').flexslider({
 
 $('.flexslider ul li img').click(function () {
     var index = $(this).data('target');
-    $('.infoproducto figure.visor img').hide();
+    $('figure.visor a').hide();
     $('#lupa'+index).show();
 });
 
+/*
 $('.infoproducto figure.visor img').mouseover(function () {
    var path = $(this).attr('src');
    $('.lupa img').attr('src', path);
@@ -38,5 +39,4 @@ $('.infoproducto figure.visor img').mousemove(function (event) {
         'margin-top':   -posY+'px',
         'background':   'transparent'
     });
-
-});
+});*/

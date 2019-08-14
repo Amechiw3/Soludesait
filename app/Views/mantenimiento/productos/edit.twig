@@ -1,0 +1,122 @@
+{% extends 'partials/layout_coreiu.twig' %}
+
+
+{% block content %}
+    <div class="pb-2 mt-4 mb-2 border-bottom">
+        <h4>Ficha de registro de Galeria</h4>
+        {% include 'mantenimiento/galerias/ModalAdd.twig' %}
+    </div>
+    <form class="mt-3" action="{{ 'mantenimiento/productos/actualizar'|url }}" method="POST">
+        <div class="row">
+            <div class="col">
+                <div class="alert-container"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="id" name="id" value="{{ producto.id }}">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Producto</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="{{ producto.nombre }}">
+                    <span class="form-validation-failed text-danger" data-key="nombre"></span>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Descripcion(breve)</label>
+                    <input type="text" class="form-control" id="breve_descripcion" name="breve_descripcion" value="{{ producto.breve_descripcion }}">
+                    <span class="form-validation-failed text-danger" data-key="breve_descripcion"></span>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Descripcion</label>
+                    <textarea name="descripcion" id="descripcion" class="form-control">{{ producto.descripcion }}</textarea>
+                    <span class="form-validation-failed text-danger" data-key="descripcion"></span>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Precio</label>
+                    <input type="text" class="form-control" id="regular_precio" name="regular_precio" value="{{ producto.regular_precio }}">
+                    <span class="form-validation-failed text-danger" data-key="regular_precio"></span>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Descuento</label>
+                    <input type="text" class="form-control" id="descuento_precio" name="descuento_precio" value="{{ producto.descuento_precio }}">
+                    <span class="form-validation-failed text-danger" data-key="descuento_precio"></span>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Categoria</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control d-none" id="categoria_id" name="categoria_id" readonly value="{{ producto.categoria.id }}">
+                        <input type="text" class="form-control" id="categorianombre" name="categorianombre" readonly value="{{ producto.categoria.nombre }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-info" type="button"  data-toggle="modal" data-target="#SearchCategoria">Buscar</button>
+                        </div>
+                    </div>
+                    <span class="form-validation-failed text-danger" data-key="nombre"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="float-right">
+                    <a href="{{ 'mantenimiento/productos'|url }}" class="btn btn-dark">Cancelar</a>
+                    <button class="btn btn-outline-success ml-2" type="submit" data-ajax="true">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div role="dialog" tabindex="-1" class="modal fade" id="SearchCategoria">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ">Selecciona una Categoria</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive mb-4">
+                        <table class="table datatable table-sm table-hover table-striped" id="datatable">
+                            <thead class="">
+                            <tr class="">
+                                <th>NOMBRE</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody class="">
+                            {% for categoria in categorias %}
+                                <tr>
+                                    <td>{{ categoria.nombre }}</td>
+                                    <td>
+                                        <button class="btn btn-success btn-block seleccion" data-target="{{ categoria.id }}" data-categoria="{{ categoria.nombre }}">Seleccionar</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('body').on('click','.seleccion',function(){
+            var codigo=$(this).data('target');
+            $('#SearchCategoria').modal('hide');
+            $('#categoria_id').val(codigo);
+            $('#categorianombre').val($(this).data('categoria'));
+        });
+    </script>
+{% endblock %}

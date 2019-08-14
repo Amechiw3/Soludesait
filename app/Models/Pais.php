@@ -15,15 +15,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pais extends Model {
 
-    use SoftDeletes;
+    //use SoftDeletes;
 
-    protected $table = "permisos";
+    protected $table = "paises";
 
     public function direcciones() {
         return $this->belongsTo('App\Models\Direccion');
     }
 
     public function estados() {
-        return $this->hasMany('App\Models\Estado');
+        return $this->hasMany('App\Models\Estado', 'pais_id', 'id');
     }
 }

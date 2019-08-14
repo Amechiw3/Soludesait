@@ -23,5 +23,6 @@
      'timezone'     => 'America/Hermosillo',
      'locale'       => 'es_MX',
      'cache'        => false,
-     'company_name' => 'Soluciones y Desarrollo TI'
+     'company_name' => 'Soluciones y Desarrollo TI',
+     'company_name_min' => 'SDTI'
  ];

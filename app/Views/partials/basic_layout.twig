@@ -12,7 +12,7 @@
     <link href="{{ 'bower_components/animate.css/animate.css'|public }}" rel="stylesheet" />
     <link href="{{ 'css/style.css'|public }}" rel="stylesheet" />
     <link href="{{ 'css/diseno.css'|public }}?{{ 'now'|date('U') }}" rel="stylesheet" />
-    <title>{{ title }}</title>
+    <title>{{ company_name ~' | '~ title }}</title>
 </head>
 <body class="vlogin" style="background-image: url('{{ ('media/fondos/' ~ fondo ~ '.jpg')|public }}')">
     <div class="">

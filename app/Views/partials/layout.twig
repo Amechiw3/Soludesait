@@ -8,6 +8,7 @@
     <link href="{{ 'bower_components/bootstrap/dist/css/bootstrap.min.css'|public }}" rel="stylesheet" />
     <link href="{{ 'bower_components/bootstrap/dist/css/bootstrap-theme.min.css'|public }}" rel="stylesheet" />
     <link href="{{ 'bower_components/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/CoreIU/libs/datatables.net-bs4/css/dataTables.bootstrap4.css'|public }}" rel="stylesheet" />
     <link href="{{ 'bower_components/ekko-lightbox/dist/ekko-lightbox.css'|public }}" rel="stylesheet" />
     <link href="{{ 'bower_components/sweetalert2/dist/sweetalert2.css'|public }}" rel="stylesheet" />
     <link href="{{ 'bower_components/animate.css/animate.css'|public }}" rel="stylesheet" />
@@ -15,7 +16,7 @@
     <link href="{{ 'css/style.css'|public }}" rel="stylesheet" />
     <link href="{{ 'css/diseno.css'|public }}?{{ 'now'|date('U') }}" rel="stylesheet" />
     <link href="{{ 'css/developer.css'|public }}" rel="stylesheet" />
-    <title>{{ title }}</title>
+    <title>{{ company_name ~' | '~ title }}</title>
     {% block styles %}{% endblock %}
 
 </head>
@@ -25,7 +26,7 @@
         <nav class="navbar navbar-dark navbar-expand-lg navigation-clean-search">
             <div class="container">
                 <a href="#" class="navbar-brand">
-                    {{ title }}
+                    {{ company_name }}
                     <i class="fa fa-code"></i>
                 </a>
                 <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
@@ -38,50 +39,67 @@
                             <a href="{{ 'home'|url }}" class="nav-link">Inicio</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a href="{{ 'home/empresa'|url }}" class="nav-link">Quienes Somos</a>
+                            <a href="{{ 'home#empresa'|url }}" class="nav-link">Quienes Somos</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a href="#contacto" class="nav-link">Contacto</a>
+                            <a href="{{ 'home#contecto'|url }}" class="nav-link">Contacto</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a href="{{ 'home/productos'|url }}" class="nav-link">Productos</a>
+                            <a href="{{ 'tienda/productos'|url }}" class="nav-link">Productos</a>
                         </li>
-                        <li class="dropdown"><a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle">Mantenimiento</a>
-                            <div role="menu" class="dropdown-menu">
-                                <a role="presentation" href="{{ 'mantenimiento/usuarios'|url }}" class="dropdown-item">Usuarios</a>
-                                <a role="presentation" href="{{ 'mantenimiento/roles'|url }}" class="dropdown-item">Roles</a>
-                                <a role="presentation" href="{{ 'mantenimiento/permisos'|url }}" class="dropdown-item">Permisos</a>
-                            </div>
-                        </li>
+                        {% if isLogin() %}
+                            {% if tienePermiso(1) %}
+                                <li role="presentation" class="nav-item">
+                                    <a href="{{ 'mantenimiento'|url }}" class="nav-link">Mantenimiento</a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
                     </ul>
                     <ul class="nav navbar-nav ml-auto profile-nav">
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle">
-                                Hola, ¡<b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>!
-                            </a>
-                            <div role="menu" class="dropdown-menu dropdown-menu-right container-fluid">
-                                <div class="dropdown-header text-center">
-                                    <img src="{{ ('media/usuarios/'~usuario.avatar)|public }}" alt="" class="img-fluid d-none d-md-block">
-                                    <p>
-                                        <b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>
-                                        <br class="text-muted">{{ usuario.correo }}</p>
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6 no-gutters">
-                                        <a href="" class="dropdown-item text-center">Perfil</a>
+                        {% if usuario %}
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle">
+                                    Hola, ¡<b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>!
+                                </a>
+                                <div role="menu" class="dropdown-menu dropdown-menu-right container-fluid">
+                                    <div class="dropdown-header text-center">
+                                        <img src="{{ ('media/usuarios/'~usuario.avatar)|public }}" alt="" class="img-fluid d-none d-md-block">
+                                        <p>
+                                            <b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>
+                                            <br class="text-muted">{{ usuario.correo }}</p>
+                                        </p>
+
                                     </div>
-                                    <div class="col-sm-12 col-md-6 no-gutters">
-                                        <a href="" class="dropdown-item text-center">Cerrar Sesion</a>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6 no-gutters">
+                                            <a href="" class="dropdown-item text-center">Perfil</a>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 no-gutters">
+                                            <a href="" class="dropdown-item text-center">Cerrar Sesion</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li role="presentation" class="nav-item navbar-text" title="Desconectarse">
-                            <a href="{{ 'auth/signout'|url }}">
-                                <i class="fa fa-sign-out-alt"></i>
-                            </a>
-                        </li>
+                            </li>
+                            <li role="presentation" class="nav-item navbar-text mx-3">
+                                <a href="{{ 'tienda/vercarrito'|url }}">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item navbar-text mx-3" title="Desconectarse">
+                                <a href="{{ 'auth/signout'|url }}">
+                                    <i class="fa fa-sign-out-alt"></i>
+                                </a>
+                            </li>
+                        {% else %}
+                            {% include 'partials/modalLogin.twig' %}
+
+                            <li role="presentation" class="nav-item nav-link" data-toggle="modal" data-target="#modalLogin">
+                                Iniciar Sesion
+                            </li>
+                            <li role="presentation" class="nav-item btn btn-primary">
+                                Registrarse
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -125,8 +143,12 @@
     <script src="{{ 'bower_components/jquery-form/dist/jquery.form.min.js'|public }}"></script>
     <script src="{{ 'js/main.js'|public }}"></script>
     <script src="{{ 'js/ini.js'|public }}"></script>
-    <script src="{{ 'js/anexgrid/jquery.anexgrid.js'|public }}"></script>
+    <script src="{{ 'bower_components/CoreIU/libs/datatables.net/jquery.dataTables.js'|public }}"></script>
+    <script src="{{ 'bower_components/CoreIU/libs/datatables.net-bs4/dataTables.bootstrap4.js'|public }}"></script>
     <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+        } );
         function redirect(url) {
             url = url || '';
             window.location.href = base_url(url);

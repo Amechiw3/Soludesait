@@ -14,15 +14,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ciudad extends Model {
 
-    use SoftDeletes;
+    //use SoftDeletes;
 
-    protected $table = 'Ciudades';
+    protected $table = 'ciudades';
 
     public function direcciones() {
         return $this->hasMany('App\Models\Direccion');
     }
 
     public function estados() {
-        return $this->belongsTo('App\Models\Estado');
+        return $this->belongsTo('App\Models\Estado', 'estado_id', 'id');
     }
 }

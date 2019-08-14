@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="{{ 'bower_components/CoreIU/css/styleCore.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/CoreIU/libs/@coreui/icons/css/coreui-icons.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/CoreIU/libs/simple-line-icons/css/simple-line-icons.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/CoreIU/libs/datatables.net-bs4/css/dataTables.bootstrap4.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/Font-Awesome/web-fonts-with-css/css/fontawesome-all.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/ekko-lightbox/dist/ekko-lightbox.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/sweetalert2/dist/sweetalert2.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/animate.css/animate.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'bower_components/swiper/dist/css/swiper.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'css/style.css'|public }}" rel="stylesheet" />
+    <link href="{{ 'css/diseno.css'|public }}?{{ 'now'|date('U') }}" rel="stylesheet" />
+    <link href="{{ 'css/developer.css'|public }}" rel="stylesheet" />
+
+    <title>{{ company_name ~ ' | ' ~ title }}</title>
+    {% block style %}{% endblock %}
+
+    {% set usuario = user() %}
+</head>
+<!-- sidebar-fixed -->
+<body class="app header-fixed aside-menu-fixed">
+    <header class="app-header navbar">
+        <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" id="logo">
+            <b class="navbar-brand-full">{{ company_name }}</b>
+            <b class="navbar-brand-minimized">{{ company_name_min }}</b>
+        </a>
+        {% if isLogin() %}
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        {% endif %}
+        <ul class="nav navbar-nav d-md-down-none">
+            <li class="nav-item px-3">
+                <a class="nav-link" href="">Inicio</a>
+            </li>
+            <!--<li class="nav-item dropdown px-3">
+                <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+
+                </a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-header text-center">
+                        <strong></strong>
+                    </div>
+                    <a class="dropdown-item" href="?view=Administradores">
+                        <i class="fa fa-list"></i>Listado
+                    </a>
+                </div>
+            </li>-->
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            {% if isLogin() %}
+            <li class="nav-item dropdown">
+                <a class="nav-link nav-link mr-5" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img class="img-avatar" src="{{ ('media/usuarios/'~ usuario.avatar)|public }}">
+                    <b>{{ usuario.nombre ~ ' ' ~ usuario.apaterno ~ ' ' ~ usuario.amaterno }}</b>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-header text-center">
+                        <strong>Cuenta</strong>
+                    </div>
+                    <a class="dropdown-item">
+                        <i class="fa fa-user"></i>Perfil
+                    </a>
+                    <a class="dropdown-item" href="{{ 'auth/signout'|url }}">
+                        <i class="fa fa-lock"></i>Salir
+                    </a>
+                </div>
+            </li>
+            {% else %}
+                <li role="presentation" class="nav-item px-2" data-toggle="modal" data-target="#modalLogin">
+                    Iniciar Sesion
+                </li>
+                <li role="presentation" class="nav-item btn btn-outline-primary">
+                    Registrarse
+                </li>
+            {% endif %}
+        </ul>
+        <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </header>
+    <div class="app-body">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="main.html">
+                            <i class="nav-icon icon-speedometer"></i> Dashboard
+                            <span class="badge badge-info">NEW</span>
+                        </a>
+                    </li>-->
+                    <li class="nav-title text-center">{{ company_name }}</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ 'mantenimiento'|url }}">
+                            <i class="nav-icon fa fa-circle"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        {% if tienePermiso(2) %}
+                        <a class="nav-link" href="{{ 'mantenimiento/historial'|url }}">
+                            <i class="nav-icon fa fa-book-open"></i> Accesos
+                        </a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        {% if tienePermiso(3) %}
+                        <a class="nav-link" href="{{ 'mantenimiento/historial'|url }}">
+                            <i class="nav-icon fa fa-book-open"></i> Bitacora
+                        </a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon fa fa-money-bill"></i> Ventas</a>
+                        <ul class="nav-dropdown-items">
+                            {% if tienePermiso(4) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/ventas'|url }}">
+                                    <i class="nav-icon fa fa-money-bill"></i> Ventas</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(5) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/detalles'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Detalles</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(6) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/cupones'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Cupones</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon fa fa-directions"></i> Direcciones</a>
+                        <ul class="nav-dropdown-items">
+                            {% if tienePermiso(7) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/direcciones'|url }}">
+                                    <i class="nav-icon fa fa-directions"></i> Direcciones</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(8) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/ciudades'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Ciudades</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(9) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/estados'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Estados</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(10) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/paises'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Paises</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon fa fa-list"></i> Productos</a>
+                        <ul class="nav-dropdown-items">
+                            {% if tienePermiso(11) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/productos'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Productos</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(12) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/galerias'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Galerias</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(13) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/etiquetas'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Etiquetas</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(14) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/categorias'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Categorias</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon fa fa-list"></i> Usuarios</a>
+                        <ul class="nav-dropdown-items">
+                            {% if tienePermiso(15) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/usuarios'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Usuarios</a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(16) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/historiales'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Tarjetas
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if tienePermiso(17) %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ 'mantenimiento/roles'|url }}">
+                                    <i class="nav-icon fa fa-table"></i> Roles</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+        </div>
+        <aside class="aside-menu">
+            <!--<ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#cartproduct" role="tab">
+                        <i class="fa fa-cart-plus"></i>
+                    </a>
+                </li>
+            </ul>-->
+            <div class="tab-content">
+                <div class="tab-panel active" id="cartproduct" role="tabpanel">
+                    <div class="list-group list-group-accent">
+                        <div class="list-group-item bg-black text-center font-weight-bold text-uppercase">Carrito de Compras</div>
+                        <div class="list-group-item">
+                            <div class="avatar float-left">
+                                <img class="img-avatar" src="" alt="admin@bootstrapmaster.com">
+                            </div>
+                            <div class="float-right">
+                                <div class="text-right"><strong>Producto</strong></div>
+                                <small class="text-muted ml-3"><i class="fa fa-calculator"></i>Cantidad</small>
+                                <small class="text-muted ml-3"><i class="fa fa-usd"></i>Precio</small>
+                                <small class="text-muted ml-3"><i class="fa fa-usd"></i>Subtotal</small>
+                            </div>
+                        </div>
+                        <?php } ?>
+                        <div class="list-group-item text-center font-weight-bold text-uppercase no-padding">
+                            <a href="?view=perfil&mode=venta" class="btn btn-ghost-success btn-block p-3">Resumen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main class="main">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Home</li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+
+            <div class="container-fluid">
+                <div id="ui-view">
+                    {% block content %}
+                        
+                    {% endblock %}
+
+                </div>
+            </div>
+        </main>
+    </div>
+    {% if isLogin() == false %}
+        {% include 'partials/modalLogin.twig' %}
+    {% endif %}
+    <script src="{{ 'bower_components/jquery/dist/jquery.min.js'|public }}"></script>
+    <script src="{{ 'bower_components/CoreIU/libs/popper.js/js/popper.min.js'|public }}"></script>
+    <script src="{{ 'bower_components/bootstrap/dist/js/bootstrap.js'|public }}"></script>
+    <script src="{{ 'bower_components/CoreIU/libs/@coreui/coreui-pro/js/coreui.min.js'|public }}"></script>
+    <script src="{{ 'bower_components/CoreIU/libs/datatables.net/jquery.dataTables.js'|public }}"></script>
+    <script src="{{ 'bower_components/CoreIU/libs/datatables.net-bs4/dataTables.bootstrap4.js'|public }}"></script>
+    <script src="{{ 'bower_components/sweetalert2/dist/sweetalert2.all.js'|public }}"></script>
+    <script src="{{ 'bower_components/jquery-form/dist/jquery.form.min.js'|public }}"></script>
+    <script src="{{ 'js/ini.js'|public }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable();
+        } );
+        function redirect(url) {
+            url = url || '';
+            window.location.href = base_url(url);
+        }
+        function base_url(url) {
+            url = url || '';
+            return '{{''|url}}' + url;
+        }
+    </script>
+    {% block script %}{% endblock %}
+</body>
+</html>

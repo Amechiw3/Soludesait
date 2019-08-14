@@ -20,7 +20,7 @@ class Orden_Producto extends Model {
         return $this->belongsTo('App\Models\Producto');
     }
 
-    public function ventas() {
+    public function venta() {
         return $this->belongsTo('App\Models\Usuario');
     }
 }

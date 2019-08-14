@@ -1,0 +1,106 @@
+{% extends 'partials/layout_coreiu.twig' %}
+{% block content %}
+    <div class="pb-2 mt-4 mb-2 border-bottom">
+        <h4>
+            Catálogo de Cupones
+            <button type="button" data-toggle="modal" data-target="#ModalAdd" class="btn btn-success float-right">
+                <i class="fa fa-plus"></i>
+            </button>
+        </h4>
+        {% include 'mantenimiento/cupones/ModalAdd.twig' %}
+    </div>
+    <div class="table-responsive mb-4">
+        <table class="table datatable table-sm table-hover table-striped">
+            <thead class="">
+            <tr>
+                <th>CODIGO</th>
+                <th>DESCRIPCION</th>
+                <th>DESCUENTO</th>
+                <th>FECHA</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cupon in cupones %}
+                <tr>
+                    <td>{{ cupon.codigo }}</td>
+                    <td>{{ cupon.descripcion }}</td>
+                    <td>{{ cupon.descuento }}</td>
+                    <td>{{ cupon.inicio_fecha|date('Y/m/d') ~ ' - ' ~ cupon.fin_fecha|date('Y/m/d') }}</td>
+                    <td>
+                        <div class="btn-group d-flex">
+                            <button class="btn btn-link text-info w-100" data-toggle="modal" data-target="#ModalEdit{{ cupon.id }}">
+                                <i class="fa fa-pencil-alt"></i>
+                            </button>
+                            <button class="btn btn-link text-danger w-100 eliminar" data-target="{{ cupon.id }}">
+                                <i class="fa fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        {% include 'mantenimiento/cupones/ModalEdit.twig' %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <caption>Listado de cupones: {{ cupones.count }}</caption>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('body').on('click','.eliminar',function(){
+            var codigo=$(this).data('target');
+            let timerInterval;
+            swal({
+                title: '¿Estas seguro?',
+                text: "Quieres eliminar el Cupon",
+                type: 'warning',
+                customClass: 'animated tada',
+                animation: false,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar Cupon'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url:'{{ 'mantenimiento/cupones/eliminar'|url }}',
+                        dataType:'JSON',
+                        data:{id:codigo},
+                        type:'POST',
+                        preventDefault:function(){},
+                        success:function(r){
+                            swal({
+                                title: "Eliminado!",
+                                html: 'Cupon Eliminado con Exito<br>La ventana se cerrara en <strong></strong> segundos',
+                                type: "success",
+                                timer: 1000,
+                                onOpen: () => {
+                                    swal.showLoading()
+                                    timerInterval = setInterval(() => {
+                                        swal.getContent().querySelector('strong')
+                                            .textContent = swal.getTimerLeft()
+                                    }, 100)
+                                },
+                                onClose: () => {
+                                    clearInterval(timerInterval);
+                                }
+                            }).then((result) => {
+                                if (
+                                    // Read more about handling dismissals
+                                    result.dismiss === swal.DismissReason.timer
+                                ) {
+                                    location.reload();
+                                }
+                            });
+                        },
+                        error:function(request, status, error){
+                            console.log(error);
+                        }
+                    });
+
+                }
+            })
+        });
+    </script>
+{% endblock %}

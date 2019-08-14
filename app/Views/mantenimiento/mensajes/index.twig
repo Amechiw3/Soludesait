@@ -1,0 +1,115 @@
+{% extends 'partials/layout_coreiu.twig' %}
+
+{% block content %}
+    <div class="pb-2 mt-4 mb-2 border-bottom">
+        <h4>
+            Catálogo de Mensajes
+            <button type="button" data-toggle="modal" data-target="#ModalAdd" class="btn btn-success float-right">
+                <i class="fa fa-plus"></i>
+            </button>
+        </h4>
+        {% include 'mantenimiento/mensajes/ModalAdd.twig' %}
+    </div>
+    <div class="table-responsive mb-4">
+        <table class="table datatable table-sm table-hover table-striped">
+            <thead class="">
+                <tr>
+                    <th>NOMBRE</th>
+                    <th>EMAIL</th>
+                    <th>MENSAJE</th>
+                    <th>VISTO</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mensaje in mensajes %}
+                    <tr>
+                        <td>{{ mensaje.nombre }}</td>
+                        <td>{{ mensaje.correo }}</td>
+                        <td>{{ mensaje.mensaje }}</td>
+                        <td>
+                            {% if mensaje.visto %}
+                                <p class="text-info"><i class="fa fa-check fa-1x"></i></p>
+                            {% else %}
+                                <p><i class="fa fa-check fa-1x"></i></p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group d-flex">
+                                <button type="button" data-toggle="modal" data-target="#ModalEdit{{ mensaje.id }}" class="btn btn-link text-info">
+                                    <i class="fa fa-pencil-alt"></i>
+                                </button>
+                                <button class="btn btn-link text-danger w-100 eliminar" data-target="{{ mensaje.id }}">
+                                    <i class="fa fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            {% include 'mantenimiento/mensajes/ModalEdit.twig' %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <caption>Listado de mensajes: {{ mensajes.count }}</caption>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $('body').on('click','.eliminar',function(){
+            var codigo=$(this).data('target');
+            let timerInterval;
+            swal({
+                title: '¿Estas seguro?',
+                text: "Quieres eliminar el mensaje",
+                type: 'warning',
+                customClass: 'animated tada',
+                animation: false,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar Mensaje'
+            }).then((result) => {
+                if (result.value) {
+
+                    $.ajax({
+                        url:'{{ 'mantenimiento/mensajes/eliminar'|url }}',
+                        dataType:'JSON',
+                        data:{id:codigo},
+                        type:'POST',
+                        preventDefault:function(){},
+                        success:function(r){
+                            swal({
+                                title: "Eliminada!",
+                                html: 'Mensaje Eliminado con Exito<br>La ventana se cerrara en <strong></strong> segundos',
+                                type: "success",
+                                timer: 1000,
+                                onOpen: () => {
+                                    swal.showLoading()
+                                    timerInterval = setInterval(() => {
+                                        swal.getContent().querySelector('strong')
+                                            .textContent = swal.getTimerLeft()
+                                    }, 100)
+                                },
+                                onClose: () => {
+                                    clearInterval(timerInterval);
+                                }
+                            }).then((result) => {
+                                if (
+                                    // Read more about handling dismissals
+                                    result.dismiss === swal.DismissReason.timer
+                                ) {
+                                    location.reload();
+                                }
+                            });
+                        },
+                        error:function(request, status, error){
+                            console.log(error);
+                        }
+                    });
+
+                }
+            })
+        });
+    </script>
+{% endblock %}

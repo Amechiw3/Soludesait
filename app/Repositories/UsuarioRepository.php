@@ -18,6 +18,7 @@ namespace App\Repositories;
 
 use App\Helpers\GridHelper;
 use App\Helpers\ResponseHelper;
+use App\Models\Historial;
 use App\Models\Usuario;
 use Core\Auth;
 use Core\Log;
@@ -78,29 +79,23 @@ class UsuarioRepository
     **/
     public function guardar(Usuario $model) : ResponseHelper {
         $rh = new ResponseHelper();
-
         try {
             $this->usuario = $model;
-
             if (isset($model->id)) {
                 $this->usuario->exists = true;
-
                 if (!empty($model->password)){
                     $this->usuario->password = sha1($model->password);
                 } else {
                     $this->usuario->password = (Usuario::find($model->id))->password;
                 }
-
             } else {
                 $this->usuario->password = sha1($model->password);
             }
-
             $this->usuario->save();
             $rh->setResponse(true, 'Registro guardado con exito');
         } catch (\Exception $e) {
             Log::error(UsuarioRepository::class, $e->getMessage());
         }
-
         return $rh;
     }
 
@@ -178,16 +173,24 @@ class UsuarioRepository
             if (is_object($tmp)) {
 
                 Auth::signIn([
-                    'id'         => $tmp->id,
+                    'id'        => $tmp->id,
                     'nombre'    => $tmp->nombre,
                     'apaterno'  => $tmp->apaterno,
                     'amaterno'  => $tmp->amaterno,
                     'rol_id'    => $tmp->rol_id,
                     'rol'       => $tmp->roles,
+                    'direccion' => $tmp->direcciones,
                     'avatar'    => $tmp->avatar,
                     'correo'    => $tmp->correo
                 ]);
                 $rh->setResponse(true);
+
+                $htl = new Historial();
+                $htl->ingreso = date("YmdHis");
+                $htl->usuario_id = $tmp->id;
+
+                (new HistorialRepository())->Guardar($htl);
+
             } else {
                 $rh->setResponse(false, 'Credenciales de autenficacion no validas');
                 Log::critical(UsuarioRepository::class, "INTENTO FALLIDO DE AUTENTIFICACION DE ". $correo);

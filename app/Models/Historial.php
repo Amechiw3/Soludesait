@@ -15,4 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Historial extends Model {
     use SoftDeletes;
     protected $table = 'historial';
+    public function usuario() {
+        return $this->belongsTo('App\Models\Usuario');
+    }
 }

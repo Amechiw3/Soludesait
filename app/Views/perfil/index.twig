@@ -32,10 +32,85 @@
                         <div class="">
                             <h4>Catalogo de mis Compras</h4>
                         </div>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-dark table-sm table-hover table-striped">
+                                <thead class="">
+                                <tr class="text-center">
+                                    <th>FECHA</th>
+                                    <th>ESTADO</th>
+                                    <th>DIRECCION</th>
+                                    <th>TOTAL</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                {% for venta in ventas %}
+                                    <tr>
+                                        <td>{{ venta.orden_fecha }}</td>
+                                        <td>{{ venta.status_at }}</td>
+                                        <td>{{ venta.direccion.calle }}</td>
+                                        <td>{{ venta.total }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{{ ('mantenimiento/actualizaru/' ~ venta.id)|url }}" class="btn btn-link text-info">
+                                                    <i class="fa fa-pencil-alt"></i>
+                                                </a>
+                                                <a href="{{ ('mantenimiento/eliminaru/' ~ venta.id)|url }}" class="btn btn-link text-danger">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <caption>Listado de ventas: {{ ventas.count }}</caption>
+                        </div>
                     </div>
                     <div class="tab-pane" id="tab-2">
                         <div class="">
                             <h4>Catalogo de mis Direcciones</h4>
+                        </div>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-dark table-sm table-hover table-striped">
+                                <thead class="">
+                                <tr class="text-center">
+                                    <th>CALLE</th>
+                                    <th>AVE.</th>
+                                    <th>COLONIA</th>
+                                    <th>CODIGO POSTAL</th>
+                                    <th>CIUDAD</th>
+                                    <th>ESTADO</th>
+                                    <th>PAIS</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                {% for direccion in direcciones %}
+                                    <tr>
+                                        <td>{{ direccion.calle }}</td>
+                                        <td>{{ direccion.avenida }}</td>
+                                        <td>{{ direccion.colonia }}</td>
+                                        <td>{{ direccion.codigopostal }}</td>
+                                        <td>{{ direccion.ciudad.nombre }}</td>
+                                        <td>{{ direccion.estado.nombre }}</td>
+                                        <td>{{ direccion.pais.nombre }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{{ ('mantenimiento/actualizaru/' ~ direccion.id)|url }}" class="btn btn-link text-info">
+                                                    <i class="fa fa-pencil-alt"></i>
+                                                </a>
+                                                <a href="{{ ('mantenimiento/eliminaru/' ~ direccion.id)|url }}" class="btn btn-link text-danger">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <caption>Listado de direcciones: {{ direcciones.count }}</caption>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab-3">

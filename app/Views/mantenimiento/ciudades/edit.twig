@@ -1,0 +1,95 @@
+{% extends 'partials/layout_coreiu.twig' %}
+{% block content %}
+    <div class="pb-2 mt-4 mb-2 border-bottom">
+        <h4>Ficha de Registro de Ciudades</h4>
+    </div>
+    <form action="{{ 'mantenimiento/ciudades/actualizarciudad'|url }}" method="POST" class="mt-2">
+        <div class="row">
+            <div class="col">
+                <div class="alert-container"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 d-none">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="id" id="id" name="id" value="{{ ciudad.id }}">
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Estado</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control d-none" id="estado_id" name="estado_id" value="{{ ciudad.estados.id }}" readonly>
+                        <input type="text" class="form-control" id="estadonombre" name="estadonombre" value="{{ ciudad.estados.estado }}" readonly>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-info" type="button"  data-toggle="modal" data-target="#SearchEstado">Buscar</button>
+                        </div>
+                    </div>
+                    <span class="form-validation-failed text-danger" data-key="nombre"></span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12">
+                <div class="form-group">
+                    <label class="d-none d-md-block" for="nombre">Ciudad</label>
+                    <input type="text" class="form-control" placeholder="Ciudad" id="ciudad" name="ciudad" value="{{ ciudad.ciudad }}">
+                    <span class="form-validation-failed text-danger" data-key="ciudad"></span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="float-right">
+                    <a class="btn btn-dark" href="{{ 'mantenimiento/ciudades'|url }}">Cancelar</a>
+                    <button class="btn btn-outline-success ml-2" type="submit" data-ajax="true">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div role="dialog" tabindex="-1" class="modal fade" id="SearchEstado">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ">Ficha de Registro de Ciudades</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive mb-4">
+                        <table class="table datatable table-sm table-hover table-striped">
+                            <thead class="">
+                            <tr class="">
+                                <th>NOMBRE</th>
+                                <th>PAIS</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody class="">
+                            {% for estado in estados %}
+                                <tr>
+                                    <td>{{ estado.estado }}</td>
+                                    <td>{{ estado.paises.pais }}</td>
+                                    <td>
+                                        <button class="btn btn-success btn-block seleccion" data-target="{{ estado.id }}" data-estado="{{ estado.estado }}">Seleccionar</button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <caption>Listado de Estados: {{ estados.count }}</caption>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('body').on('click','.seleccion',function(){
+            var codigo=$(this).data('target');
+            $('#SearchEstado').modal('hide');
+            $('#estado_id').val(codigo);
+            $('#estadonombre').val($(this).data('estado'));
+        });
+    </script>
+{% endblock %}

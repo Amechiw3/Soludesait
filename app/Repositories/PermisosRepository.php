@@ -18,13 +18,13 @@ namespace App\Repositories;
 
 use App\Helpers\ResponseHelper;
 use App\Models\Permiso;
+use App\Models\PermisoNegado;
 use Core\Log;
 use Illuminate\Database\Eloquent\Collection;
 
 class PermisosRepository
 {
     private $permiso;
-
     public function __construct()
     {
         $this->permiso = new Permiso();
@@ -93,19 +93,5 @@ class PermisosRepository
         return $rh;
     }
 
-    #region PERMISOS NEGADOS
-    public function obtenerPermisoNegadoByRol($permisoId,$rolId):?PermisoNegado{
-        $pNegado=null;
-        try{
-            $pNegado=$this->permisoNegado
-                ->where('permiso_id',$permisoId)
-                ->where('rol_id',$rolId)
-                ->first();
-        }catch (\Exception $e){
-            Log::error(UsuarioRepositories::class,
-                $e->getMessage());
-        }
-        return $pNegado;
-    }
-    #endregion
+
 }

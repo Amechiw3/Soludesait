@@ -15,7 +15,7 @@
     <link href="{{ 'css/style.css'|public }}" rel="stylesheet" />
     <link href="{{ 'css/diseno.css'|public }}?{{ 'now'|date('U') }}" rel="stylesheet" />
     <link href="{{ 'css/developer.css'|public }}" rel="stylesheet" />
-    <title>{{ title }}</title>
+    <title>{{ company_name ~' | '~ title }}</title>
     {% block styles %}{% endblock %}
 
 </head>
@@ -25,7 +25,7 @@
         <nav class="navbar navbar-dark navbar-expand-lg">
             <div class="container">
                 <a href="#" class="navbar-brand">
-                    {{ title }}
+                    {{ company_name }}
                     <i class="fa fa-code"></i>
                 </a>
                 <button data-toggle="collapse" data-target="#navcol-1" class="navbar-toggler">
@@ -38,21 +38,22 @@
                             <a href="{{ 'home'|url }}" class="nav-link">Inicio</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a href="{{ 'home/empresa'|url }}" class="nav-link">Quienes Somos</a>
+                            <a href="{{ 'home#empresa'|url }}" class="nav-link">Quienes Somos</a>
                         </li>
                         <li role="presentation" class="nav-item">
-                            <a href="#contacto" class="nav-link">Contacto</a>
+                            <a href="{{ 'home#contacto'|url }}" class="nav-link">Contacto</a>
                         </li>
+
                         <li role="presentation" class="nav-item">
-                            <a href="{{ 'home/productos'|url }}" class="nav-link">Productos</a>
+                            <a href="{{ 'tienda/productos'|url }}" class="nav-link">Productos</a>
                         </li>
-                        <li class="dropdown"><a data-toggle="dropdown" aria-expanded="false" href="#" class="dropdown-toggle nav-link dropdown-toggle">Mantenimiento</a>
-                            <div role="menu" class="dropdown-menu">
-                                <a role="presentation" href="{{ 'mantenimiento/usuarios'|url }}" class="dropdown-item">Usuarios</a>
-                                <a role="presentation" href="{{ 'mantenimiento/roles'|url }}" class="dropdown-item">Roles</a>
-                                <a role="presentation" href="{{ 'mantenimiento/permisos'|url }}" class="dropdown-item">Permisos</a>
-                            </div>
-                        </li>
+                        {% if isLogin() %}
+                            {% if tienePermiso(1) %}
+                                <li role="presentation" class="nav-item">
+                                    <a href="{{ 'mantenimiento'|url }}" class="nav-link">Mantenimiento</a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
                     </ul>
                     <ul class="nav navbar-nav ml-auto profile-nav">
                         {% if usuario %}
@@ -79,7 +80,12 @@
                                     </div>
                                 </div>
                             </li>
-                            <li role="presentation" class="nav-item navbar-text" title="Desconectarse">
+                            <li role="presentation" class="nav-item navbar-text mx-3">
+                                <a href="{{ 'tienda/vercarrito'|url }}">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </a>
+                            </li>
+                            <li role="presentation" class="nav-item navbar-text mx-3" title="Desconectarse">
                                 <a href="{{ 'auth/signout'|url }}">
                                     <i class="fa fa-sign-out-alt"></i>
                                 </a>
@@ -103,35 +109,35 @@
                 <div class="carousel-item">
                     <img src="{{ 'media/fondos/1.jpg'|public }}" alt="Slide Image" class="w-100" />
                     <div class="carousel-caption">
-                        <h1>{{ title }}</h1>
+                        <h1>{{ company_name }}</h1>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{{ 'media/fondos/2.jpg'|public }}" alt="Slide Image" class="w-100" />
                     <div class="carousel-caption">
-                        <h1>{{ title }}</h1>
+                        <h1>{{ company_name }}</h1>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                 </div>
                 <div class="carousel-item active">
                     <img src="{{ 'media/fondos/3.jpg'|public }}" alt="Slide Image" class="w-100" />
                     <div class="carousel-caption">
-                        <h1>{{ title }}</h1>
+                        <h1>{{ company_name }}</h1>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{{ 'media/fondos/4.jpg'|public }}" alt="Slide Image" class="w-100" />
                     <div class="carousel-caption">
-                        <h1>{{ title }}</h1>
+                        <h1>{{ company_name }}</h1>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="{{ 'media/fondos/5.jpg'|public }}" alt="Slide Image" class="w-100" />
                     <div class="carousel-caption">
-                        <h1>{{ title }}</h1>
+                        <h1>{{ company_name }}</h1>
                         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
                     </div>
                 </div>

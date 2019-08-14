@@ -1,28 +1,22 @@
-{% extends 'partials/layout.twig' %}
+{% extends 'partials/layout_coreiu.twig' %}
 
 {% block content %}
     <div class="pb-2 mt-4 mb-2 border-bottom">
-        <h4>
-            Catálogo de Permisos
-            <a href="{{ 'mantenimiento/npermiso'|url }}" class="btn btn-success float-right">
-                <i class="fa fa-plus"></i>
-            </a>
-        </h4>
+        <h4>Catálogo de Permisos</h4>
     </div>
     {% if (datos.count > 0) %}
         <div class="table-responsive mb-4">
-            <table class="table table-sm table-borderless table-hover">
-                <thead class="thead-dark">
-                    <tr class="text-center">
-                        <th>NOMBRE</th>
-                        <th></th>
+            <table class="table datatable table-sm table-hover table-striped">
+                <thead>
+                    <tr>
+                      <th>NOMBRE</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody>
                     {% for item in datos %}
                         <tr>
                             <td>{{ item.nombre }}</td>
-                            <td>
+                            <!--<td>
                                 <div class="btn-group">
                                     <a href="{{ ('mantenimiento/actualizarp/' ~ item.id)|url }}" class="btn btn-link text-info">
                                         <i class="fa fa-pencil-alt"></i>
@@ -31,10 +25,9 @@
                                         <i class="fa fa-trash-alt"></i>
                                     </a>
                                 </div>
-                            </td>
+                            </td>-->
                         </tr>
                     {% endfor %}
-
                 </tbody>
             </table>
             <caption>Listado de Permisos: {{ datos.count }}</caption>
@@ -46,5 +39,4 @@
             <p class="mb-0">No se encontraron registros</p>
         </div>
     {% endif %}
-
 {% endblock %}

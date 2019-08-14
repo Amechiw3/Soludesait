@@ -1,0 +1,123 @@
+{% extends 'partials/layout.twig' %}
+
+{% block content %}
+    <div class="product-clean container">
+        <div class="container">
+            <form action="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-secondary">Buscar</button>
+                            </div>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-secondary">Categorias</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row product">
+            {% for producto in productos %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="item">
+                        <a href="{{ ('media/productos/'~producto.galerias.first.nombre)|public }}" data-toggle="lightbox">
+                            <img src="{{ ('media/productos/'~ producto.galerias.first.nombre)|public }}" class="img-fluid" alt="{{ ('media/productos/'~producto.galerias.nombre)|public }}">
+                        </a>
+                        <!--<img class="" src="{{ 'img/martinfierro.jpg'|public }}" />-->
+                        <h3 class="name">{{ producto.nombre }}</h3>
+                        <p class="title">{{ producto.categoria.nombre }}</p>
+                        <p class="title">
+
+                        </p>
+                        <p class="description">
+                            {{ producto.breve_descripcion }}
+                        </p>
+                        <div class="options">
+                            <button class="btn btn-success addCart" data-target="{{ producto.id }}" data-precio="{{ producto.regular_precio - producto.descuento_precio }}" data-producto="{{ producto }}">
+                                <i class="fa fa-cart-plus"></i>
+                            </button>
+                            <a href="{{ ('tienda/verproducto/' ~ producto.id)|url }}" class="btn btn-info">
+                                <i class="fa fa-info"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $('body').on('click','.addCart',function(){
+            var codigo=$(this).data('target');
+            var precio=$(this).data('precio');
+            var producto=$(this).data('producto');
+            let timerInterval;
+            swal({
+                title: '¿Cantidad?',
+                type: 'question',
+                input: 'range',
+                inputAttributes: {
+                    min: 1,
+                    max: 5,
+                    step: 1
+                },
+                inputValue: 1,
+                customClass: 'animated tada',
+                animation: false,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Acceptar'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url:'{{ 'tienda/addcar'|url }}',
+                        dataType:'JSON',
+                        data:{
+                            id: codigo,
+                            cantidad: result.value,
+                            precio: precio,
+                            producto: producto
+                        },
+                        type:'POST',
+                        preventDefault:function(){},
+                        success:function(r){
+                            swal({
+                                title: "Producto Agregado!",
+                                html: 'La ventana se cerrara en <strong></strong> segundos',
+                                type: "success",
+                                timer: 1000,
+                                onOpen: () => {
+                                    swal.showLoading()
+                                    timerInterval = setInterval(() => {
+                                        swal.getContent().querySelector('strong')
+                                            .textContent = swal.getTimerLeft()
+                                    }, 100)
+                                },
+                                onClose: () => {
+                                    clearInterval(timerInterval);
+                                }
+                            }).then((result) => {
+                                if (
+                                    // Read more about handling dismissals
+                                    result.dismiss === swal.DismissReason.timer
+                                ) {
+                                    location.reload();
+                                }
+                            });
+                        },
+                        error:function(request, status, error){
+                            console.log(error);
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+{% endblock %}

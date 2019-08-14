@@ -24,7 +24,15 @@ class Usuario extends Model {
         return $this->belongsTo('App\Models\Rol');
     }
 
+    public function tarjetas() {
+        return $this->hasMany('App\Models\Tarjeta');
+    }
+
     public function historial() {
         return $this->hasMany('App\Models\Historial');
+    }
+
+    public function direcciones() {
+        return $this->hasMany('App\Models\Direccion');
     }
 }

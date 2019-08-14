@@ -1,0 +1,1 @@
+[2018-11-11 20:08:27] App\Repositories\MensajesRepository.ERROR: SQLSTATE[HY000]: General error: 1364 Field 'nombre' doesn't have a default value (SQL: insert into `mensajes` (`updated_at`, `created_at`) values (2018-11-11 20:08:27, 2018-11-11 20:08:27)) [] []

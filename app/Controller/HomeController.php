@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Repositories\ProductoRepository;
 use Core\Auth;
 use Core\Controller;
 use Core\ServicesContainer;
@@ -26,36 +27,41 @@ class HomeController extends Controller
     public function getindex()
     {
         return $this->render('home/index.twig', [
-            'title' => $this->config['company_name']
+            'company_name' => $this->config['company_name'],
+            'title' => 'Inicio',
+            '' => (new ProductoRepository())->Listar()
         ]);
     }
 
     public function getempresa()
     {
         return $this->render('home/empresa.twig', [
-            'title' => $this->config['company_name']
+            'company_name' => $this->config['company_name'],
+            'title' => 'Empresa'
         ]);
     }
 
     public function getcontacto()
     {
         return $this->render('home/contacto.twig', [
-            'title' => $this->config['company_name']
+            'company_name' => $this->config['company_name'],
+            'title' => 'Contacto'
         ]);
     }
 
     public function getproductos()
     {
         return $this->render('home/productos.twig', [
-            'title' => $this->config['company_name']
+            'company_name' => $this->config['company_name'],
+            'company_name_min' => $this->config['company_name_min'],
+            'title' => 'Productos',
+            'productos' => (new ProductoRepository())->Listar()
         ]);
-    }
-
-    public function getUser() {
-        var_dump(Auth::getCurrentUser());
     }
 
     public function getver(){
         return $this->render('home/ver.twig',[]);
     }
+
+
 }

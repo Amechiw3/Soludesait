@@ -9,6 +9,7 @@
 namespace App\Middlewares;
 
 
+use App\Repositories\PermisoNegadoRepository;
 use App\Repositories\PermisosRepository;
 use Core\Auth;
 
@@ -41,9 +42,7 @@ class RolMiddlewares
 
     public static function tienesPermiso($permisoId):bool {
         $resp=false;
-        $dato=(new PermisosRepository())->obtenerPermisoNegadoByRol(
-            $permisoId,Auth::getCurrentUser()->rol_id
-        );
+        $dato=(new PermisoNegadoRepository())->obtenerPermisoNegadoByRol($permisoId, Auth::getCurrentUser()->rol_id);
         if(!is_object($dato)){
            $resp=true;
         }
